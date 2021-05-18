@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const { PORT } = require("./config/config");
 const connectDb = require("./config/connectDB");
 const postsRoutes = require("./routes/posts");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("tiny"));
 }
 app.use("/api/posts", postsRoutes);
+app.use("/api/auth", authRoutes);
 
 connectDb().then(() => {
   console.log("Connected to mongo");
