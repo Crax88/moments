@@ -1,8 +1,10 @@
 const path = require("path");
 const fs = require("fs");
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const { PORT } = require("./config/config");
+const connectDb = require("./config/connectDB");
 const postsRoutes = require("./routes/posts");
 
 const app = express();
@@ -15,4 +17,7 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use("/api/posts", postsRoutes);
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+connectDb().then(() => {
+  console.log("Connected to mongo");
+  app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+});

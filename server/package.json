@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "config": "^3.3.6",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.12.9",
     "morgan": "^1.10.0"
