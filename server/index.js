@@ -8,6 +8,7 @@ const { PORT, COOKIE_SECRET } = require("./config/config");
 const connectDb = require("./config/connectDB");
 const postsRoutes = require("./routes/posts");
 const authRoutes = require("./routes/auth");
+const error = require("./middlewares/error");
 
 const app = express();
 
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use("/api/posts", postsRoutes);
 app.use("/api/auth", authRoutes);
+app.use(error);
 
 connectDb().then(() => {
   console.log("Connected to mongo");
