@@ -1,4 +1,4 @@
-const { Schema, Model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const PostSchema = new Schema(
   {
@@ -26,7 +26,7 @@ const PostSchema = new Schema(
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { timestamps: true }
