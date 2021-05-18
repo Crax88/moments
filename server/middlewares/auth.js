@@ -12,7 +12,10 @@ const auth = async (req, res, next) => {
 
   try {
     const decoded = await jwt.verify(token, JWT_SECRET);
-    const prolongToken = createAuthToken(decoded);
+    const prolongToken = await createAuthToken({
+      _id: decoded._id,
+      remeber: decoded.remebder,
+    });
     req.user = decoded;
     res.cookie("authToken", prolongToken, {
       httpOnly: true,
