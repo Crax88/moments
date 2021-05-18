@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const createAuthToken = require("../utils/createAuthToken");
 
 const register = async (req, res) => {
   if (req.body.password !== req.body.confirmPassword) {
@@ -19,10 +20,19 @@ const register = async (req, res) => {
         },
       });
     }
-    const { email, password, nickname } = req.body;
+    const { email, password, nickname, remember } = req.body;
     user = new User({ email, password, nickname });
-    await user.save();
-    res.json({ data: user, errors: null, message: "Register success" });
+    const token = await createAuthToken({ _id: user._id, remember });
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      maxAge: remember ? 3600 * 1000 * 24 * 365 : 3600 * 1000,
+      signed: true,
+    });
+    res.json({
+      data: { email, nickname, _id: user._id },
+      errors: null,
+      message: "Register success",
+    });
   } catch (error) {
     console.error(error);
   }
@@ -65,10 +75,33 @@ const login = async (req, res) => {
         },
       });
     }
-    res.json({ data: user, errors: null, message: "Login success" });
+    const token = await createAuthToken({
+      _id: user._id,
+      remember: req.body.remember,
+    });
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      maxAge: req.body.remember ? 3600 * 1000 * 24 * 365 : 3600 * 1000,
+      signed: true,
+    });
+    res.json({
+      data: { _id: user._id, email: user.email, nickname: user.nickname },
+      errors: null,
+      message: "Login success",
+    });
   } catch (error) {
     console.error(error);
   }
 };
 
-module.exports = { register, login };
+const getMe = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const user = await User.findById(_id).select("-password");
+    res.json({ data: user, errors: null });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { register, login, getMe };
