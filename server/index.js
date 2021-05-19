@@ -1,9 +1,10 @@
 require("dotenv").config();
-// const path = require("path");
-// const fs = require("fs");
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
+Joi.validatePassword = require("joi-password-complexity");
 const { PORT, COOKIE_SECRET } = require("./config/config");
 const connectDb = require("./config/connectDB");
 const postsRoutes = require("./routes/posts");

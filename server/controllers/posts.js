@@ -1,5 +1,6 @@
 const { Types } = require("mongoose");
 const Post = require("../models/post");
+const Validator = require("../utils/Validator");
 
 const getPosts = async (req, res) => {
   try {
@@ -12,7 +13,8 @@ const getPosts = async (req, res) => {
 
 const getPostById = async (req, res) => {
   try {
-    if (!Types.ObjectId.isValid(req.params.id)) {
+    const { error } = await Validator.validateId(req.params.id);
+    if (error) {
       return res
         .status(404)
         .json({ data: null, errors: null, message: "Post not found" });
@@ -30,6 +32,14 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
+  const { errors } = await Validator.validatePost({ ...req.body });
+  if (errors) {
+    return res.status(400).json({
+      data: req.body,
+      errors,
+      message: errors._id ? "Post not found" : null,
+    });
+  }
   const post = new Post({ ...req.body, author: req.user._id });
   try {
     await post.save();
@@ -40,10 +50,14 @@ const createPost = async (req, res) => {
 };
 const updatePost = async (req, res) => {
   try {
-    if (!Types.ObjectId.isValid(req.body._id)) {
-      return res
-        .status(404)
-        .json({ data: null, errors: null, message: "Post not found" });
+    const { errors } = await Validator.validatePost(req.body);
+    if (errors) {
+      const message = errors._id
+        ? "Post not found"
+        : errors.author
+        ? "Invalid author"
+        : null;
+      return res.status(400).json({ data: req.body, errors, message });
     }
     const post = await Post.findOneAndUpdate(
       { _id: req.body._id, author: req.user._id },
@@ -63,7 +77,8 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    if (!Types.ObjectId.isValid(req.params.id)) {
+    const { error } = await Validator.validateId(req.params.id);
+    if (error) {
       return res
         .status(404)
         .json({ data: null, errors: null, message: "Post not found" });
@@ -80,7 +95,7 @@ const deletePost = async (req, res) => {
       return res.status(403).json({
         data: req.body,
         errors: null,
-        message: "Denied, no authorization",
+        message: "Can not update others posts",
       });
     }
     await post.remove();
