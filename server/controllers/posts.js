@@ -110,10 +110,40 @@ const deletePost = async (req, res) => {
   }
 };
 
+const likePost = async (req, res) => {
+  const { error } = await Validator.validateId(req.params.id);
+  if (error) {
+    return res
+      .status(404)
+      .json({ data: null, errors: null, message: "Post not found" });
+  }
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return res.status(404).json({
+      data: req.body,
+      errors: null,
+      message: "Post not found",
+    });
+  }
+  const index = post.likes.findIndex(
+    (id) => id.toString() === req.user._id.toString()
+  );
+
+  if (index === -1) {
+    post.likes.push(req.user._id);
+  } else {
+    post.likes = post.likes.filter(
+      (id) => id.toString() !== req.user._id.toString()
+    );
+  }
+  await post.save();
+  res.json({ data: post, errors: null, message: "Post liked" });
+};
 module.exports = {
   getPosts,
   getPostById,
   createPost,
   updatePost,
   deletePost,
+  likePost,
 };

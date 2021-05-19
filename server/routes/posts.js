@@ -12,6 +12,8 @@ router
   .post(auth, upload.single("file"), asyncHandler(postController.createPost))
   .put(auth, asyncHandler(postController.updatePost));
 
+router.route("/:id/like").patch(auth, asyncHandler(postController.likePost));
+
 router
   .route("/:id")
   .get(asyncHandler(postController.getPostById))
