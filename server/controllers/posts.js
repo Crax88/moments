@@ -32,7 +32,12 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const { errors } = await Validator.validatePost({ ...req.body });
+  let post = {
+    ...req.body,
+    image: req.file.filename,
+    author: req.user._id,
+  };
+  const { errors } = await Validator.validatePost(post);
   if (errors) {
     return res.status(400).json({
       data: req.body,
@@ -40,7 +45,7 @@ const createPost = async (req, res) => {
       message: errors._id ? "Post not found" : null,
     });
   }
-  const post = new Post({ ...req.body, author: req.user._id });
+  post = new Post(post);
   try {
     await post.save();
     res.json({ data: post, errors: null, message: "Post created" });
