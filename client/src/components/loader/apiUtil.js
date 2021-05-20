@@ -35,6 +35,9 @@ async function handleRequest(method, url, body, noloader, options) {
       }),
       ...options,
     });
+    if (!res.ok) {
+      throw res;
+    }
     const data = await res.json();
 
     if (!noloader) {
@@ -43,6 +46,7 @@ async function handleRequest(method, url, body, noloader, options) {
 
     return Promise.resolve(data);
   } catch (error) {
+    console.log(error);
     if (!noloader) {
       store.dispatch(hideLoader());
     }
@@ -50,7 +54,7 @@ async function handleRequest(method, url, body, noloader, options) {
   }
 }
 
-const api = {
+const apiUtil = {
   fetch: async (url, noloader, options) =>
     handleRequest(METHODS.GET, url, null, noloader, options),
   post: async (url, noloader, body, options) =>
@@ -65,4 +69,4 @@ export const initLoader = (appStore) => {
   store = appStore;
 };
 
-export default api;
+export default apiUtil;

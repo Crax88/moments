@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const loaderSlice = createSlice({
   name: "loader",
@@ -11,7 +11,7 @@ const loaderSlice = createSlice({
 
 const { actions, reducer } = loaderSlice;
 
-export const loaderSelector = createSelector((state) => state.loader);
+export const loaderSelector = (state) => state.loader;
 
 export const { showLoader, hideLoader } = actions;
 
