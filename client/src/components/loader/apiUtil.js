@@ -35,10 +35,12 @@ async function handleRequest(method, url, body, noloader, options) {
       }),
       ...options,
     });
-    if (!res.ok) {
-      throw res;
-    }
+
     const data = await res.json();
+
+    if (!res.ok) {
+      throw { data, status: res.status, statusText: res.statusText };
+    }
 
     if (!noloader) {
       store.dispatch(hideLoader());
@@ -46,7 +48,6 @@ async function handleRequest(method, url, body, noloader, options) {
 
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
     if (!noloader) {
       store.dispatch(hideLoader());
     }
@@ -55,7 +56,7 @@ async function handleRequest(method, url, body, noloader, options) {
 }
 
 const apiUtil = {
-  fetch: async (url, noloader, options) =>
+  fetch: async (url, noloader, body, options) =>
     handleRequest(METHODS.GET, url, null, noloader, options),
   post: async (url, noloader, body, options) =>
     handleRequest(METHODS.POST, url, body, noloader, options),
