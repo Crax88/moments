@@ -18,7 +18,7 @@ const { authSuccess, authFail } = actions;
 
 export const authUser = () => async (dispatch) => {
   const data = await Api.authUser();
-  if (data.errors) {
+  if (!data.errors) {
     dispatch(authSuccess(data));
   } else {
     dispatch(authFail());
@@ -27,7 +27,7 @@ export const authUser = () => async (dispatch) => {
 
 export const registerUser = (user) => async (dispatch) => {
   const data = await Api.registerUser(user);
-  if (data.errors) {
+  if (!data.errors) {
     dispatch(authSuccess(data));
   } else {
     dispatch(authFail());
@@ -36,7 +36,7 @@ export const registerUser = (user) => async (dispatch) => {
 
 export const loginUser = (credentials) => async (dispatch) => {
   const data = await Api.loginUser(credentials);
-  if (data.errors) {
+  if (!data.errors) {
     dispatch(authSuccess(data));
   } else {
     dispatch(authFail());
