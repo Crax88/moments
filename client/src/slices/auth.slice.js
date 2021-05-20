@@ -40,7 +40,7 @@ export const registerUser = (user) => async (dispatch) => {
 };
 
 export const loginUser = (credentials) => async (dispatch) => {
-  const { data, errors, message } = await Api.registerUser(user);
+  const { data, errors, message } = await Api.registerUser(credentials);
   if (!errors) {
     dispatch(authSuccess(data.data));
     message && toaster.success(message, { duration: 3 });
