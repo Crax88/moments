@@ -2,21 +2,20 @@ import React from "react";
 import { TextInputField } from "evergreen-ui";
 import { useFormikContext } from "formik";
 
-const FormField = ({ name, error, ...rest }) => {
+const FormField = ({ name, ...rest }) => {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
+
   const isInvalid = React.useMemo(
-    () => (touched[name] && (error || errors[name]) ? true : false),
-    [touched, error, errors, name]
+    () => (touched[name] && errors[name] ? true : false),
+    [touched, errors, name]
   );
-  const validationMessage = React.useMemo(
-    () => (error ? error : touched[name] && errors[name] ? errors[name] : ""),
-    [error, errors, name, touched]
-  );
+  const validationMessage = React.useMemo(() => errors[name], [errors, name]);
+
   return (
     <TextInputField
       {...rest}
       isInvalid={isInvalid}
-      {...(validationMessage ? { validationMessage } : {})}
+      {...(isInvalid ? { validationMessage } : {})}
       onBlur={() => setFieldTouched(name)}
       onChange={handleChange(name)}
     />

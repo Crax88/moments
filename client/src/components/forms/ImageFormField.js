@@ -26,13 +26,11 @@ const ImageFormField = ({ name, error, ...rest }) => {
     }
   };
   const isInvalid = React.useMemo(
-    () => touched[name] && (error || errors[name]),
-    [touched, error, errors, name]
+    () => (touched[name] && errors[name] ? true : false),
+    [touched, errors, name]
   );
-  const validationMessage = React.useMemo(
-    () => (error ? error : errors[name] ? errors[name] : ""),
-    [error, errors, name]
-  );
+  const validationMessage = React.useMemo(() => errors[name], [errors, name]);
+
   return (
     <Pane
       display="flex"
@@ -48,7 +46,7 @@ const ImageFormField = ({ name, error, ...rest }) => {
         justifyContent="center"
         minHeight="100px"
         marginBottom="10px"
-        borderColor={touched[name] && isInvalid ? "#D14343" : ""}
+        borderColor={isInvalid ? "#D14343" : ""}
         borderRadius="4px"
         padding="12px"
         onClick={handleClick}
@@ -58,7 +56,7 @@ const ImageFormField = ({ name, error, ...rest }) => {
       >
         {!file.previewUrl && <Text>Choose image</Text>}
       </Pane>
-      {touched[name] && isInvalid && (
+      {isInvalid && (
         <InlineAlert intent="danger" size={300}>
           {validationMessage}
         </InlineAlert>
