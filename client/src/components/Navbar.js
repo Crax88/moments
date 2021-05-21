@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { Pane, Avatar, Heading, Button, Link, Strong } from "evergreen-ui";
 
 import logoText from "../assets/images/logoText.png";
@@ -40,7 +41,7 @@ const Navbar = () => {
           Logout
         </Button>
       </Pane>
-      <Link>
+      <Link is={RouterLink} to="/login">
         <Strong color="#2952CC">Signin</Strong>
       </Link>
     </Pane>

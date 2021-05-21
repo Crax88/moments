@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { Pane, Heading, Paragraph, Link } from "evergreen-ui";
 import LoginForm from "../components/auth/LoginForm";
 
@@ -28,7 +29,7 @@ const LoginPage = () => {
         <LoginForm />
         <Paragraph size={500} marginTop="10px">
           Don't have an account?{" "}
-          <Link size={500} cursor="pointer" href="#">
+          <Link is={RouterLink} size={500} cursor="pointer" to="/register">
             Signup
           </Link>
         </Paragraph>

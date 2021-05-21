@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Card,
   Pane,
@@ -11,7 +12,7 @@ import {
 } from "evergreen-ui";
 
 const PostListItem = ({ post }) => {
-  const { image, title, author, likes, createdAt, tags } = post;
+  const { _id, image, title, author, likes, createdAt, tags } = post;
   return (
     <Card
       width="320px"
@@ -20,7 +21,7 @@ const PostListItem = ({ post }) => {
       backgroundColor="#fff"
       elevation={1}
     >
-      <Link href="#">
+      <Link is={RouterLink} to={`/posts/${_id}`}>
         <img src={image} width="320px" alt={title} />
       </Link>
       <Pane padding="5px">
