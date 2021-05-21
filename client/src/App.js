@@ -10,7 +10,7 @@ function App() {
   const auth = useSelector(authSelector);
   useEffect(() => {
     if (auth.isAuth === null) {
-      dispatch(authUser);
+      dispatch(authUser());
     }
   }, []);
   return (
