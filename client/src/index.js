@@ -5,6 +5,7 @@ import ThemeProvider from "./components/ThemeProvider";
 import App from "./App";
 import store from "./store";
 
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
