@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { formatDistanceToNow } from "date-fns";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Card,
@@ -40,8 +41,9 @@ const PostListItem = ({ post }) => {
         borderTop="1px solid #E6E8F0"
       >
         <Text color="muted">By {author.name}</Text>
-        <Text color="muted">6 hours ago</Text>
-        {/* do something with created date */}
+        <Text color="muted">
+          {formatDistanceToNow(createdAt, { addSuffix: true })}
+        </Text>
         <Text>
           <ThumbsUpIcon color="muted" />
           <Strong marginLeft="2px" color="muted">

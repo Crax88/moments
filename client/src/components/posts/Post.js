@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { formatDistanceToNow } from "date-fns";
 import {
   Card,
   Pane,
@@ -12,7 +13,7 @@ import {
 } from "evergreen-ui";
 
 const Post = ({ post }) => {
-  const { image, title, author, likes, tags, body } = post;
+  const { image, title, author, likes, tags, body, createdAt } = post;
   return (
     <Card
       width="100%"
@@ -61,7 +62,9 @@ const Post = ({ post }) => {
           borderRadius="4px"
         >
           <Text color="muted">By {author.name}</Text>
-          <Text color="muted">6 hours ago</Text>
+          <Text color="muted">
+            {formatDistanceToNow(createdAt, { addSuffix: true })}
+          </Text>
           <Button iconBefore={ThumbsUpIcon} intent="success">
             {likes.length}
           </Button>
