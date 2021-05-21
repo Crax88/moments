@@ -2,7 +2,7 @@ import React from "react";
 import { InlineAlert, Pane, Text } from "evergreen-ui";
 import { useFormikContext } from "formik";
 
-const ImageFormField = ({ name, error, ...rest }) => {
+const FormFilePicker = ({ name, error, accept, label, ...rest }) => {
   const inputRef = React.useRef();
   const [file, setFile] = React.useState({ file: null, previewUrl: null });
   const { setFieldTouched, setFieldValue, errors, touched } =
@@ -10,18 +10,18 @@ const ImageFormField = ({ name, error, ...rest }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && (!accept ? true : accept.includes(file.type))) {
       setFile({
         file: file,
-        previewUrl: URL.createObjectURL(file),
+        previewUrl: /image/.test(file.type) ? URL.createObjectURL(file) : "",
       });
       setFieldValue(name, file);
     }
-    setFieldTouched(name);
   };
 
   const handleClick = () => {
     if (inputRef.current) {
+      setFieldTouched(name);
       inputRef.current.click();
     }
   };
@@ -44,26 +44,45 @@ const ImageFormField = ({ name, error, ...rest }) => {
         display="flex"
         alignItemx="center"
         justifyContent="center"
-        minHeight="100px"
+        height="100px"
         marginBottom="10px"
         borderColor={isInvalid ? "#D14343" : ""}
         borderRadius="4px"
-        padding="12px"
         onClick={handleClick}
-        background={`url(${file.previewUrl}) center/contain no-repeat`}
-        backgroundSize="cover"
-        backgroundPosition="center"
       >
-        {!file.previewUrl && <Text>Choose image</Text>}
+        {!file.file ? (
+          <Text>{label ? label : "Choose file"}</Text>
+        ) : file.previewUrl ? (
+          <img
+            src={file.previewUrl}
+            alt={file.filename}
+            style={{
+              display: "block",
+              maxWidth: "230px",
+              maxHeight: "95px",
+              width: "auto",
+              height: "auto",
+              overflow: "hidden",
+            }}
+          />
+        ) : (
+          <Text color="#3366FF">{file.file.name}</Text>
+        )}
       </Pane>
       {isInvalid && (
         <InlineAlert intent="danger" size={300}>
           {validationMessage}
         </InlineAlert>
       )}
-      <input type="file" hidden ref={inputRef} onChange={handleFileChange} />
+      <input
+        type="file"
+        hidden
+        ref={inputRef}
+        onChange={handleFileChange}
+        accept={accept}
+      />
     </Pane>
   );
 };
 
-export default ImageFormField;
+export default FormFilePicker;
