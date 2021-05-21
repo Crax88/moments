@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "connected-react-router": "^6.9.1",
+    "react-router-dom": "^5.2.0"
+  }
+}

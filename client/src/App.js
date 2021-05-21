@@ -1,5 +1,6 @@
 import { Pane } from "evergreen-ui";
 import Navbar from "./components/Navbar";
+import Router from "./Router";
 function App() {
   return (
     <Pane width="100vw" height="100vh" overflow="hidden">
@@ -7,10 +8,13 @@ function App() {
         <Navbar />
         <Pane
           display="flex"
+          flexWrap="wrap"
           alignItems="center"
           marginX="30px"
           marginTop="10px"
-        ></Pane>
+        >
+          <Router />
+        </Pane>
       </Pane>
     </Pane>
   );
