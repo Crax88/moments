@@ -12,7 +12,15 @@ const initialValues = {
 
 const PostForm = ({ onSubmit, errors }) => {
   return (
-    <Pane display="flex" flexDirection="column" width="100%">
+    <Pane
+      display="flex"
+      flexDirection="column"
+      width="100%"
+      border="default"
+      padding="5px"
+      borderRadius="4px"
+      backgroundColor="#fff"
+    >
       <Form
         validationSchema={postSchema}
         initialValues={initialValues}
