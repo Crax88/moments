@@ -1,7 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { InlineAlert, Pane } from "evergreen-ui";
-import { Form, FormField, FormFilePicker, SubmitButton } from "../../forms";
+import { InlineAlert, Pane, Heading } from "evergreen-ui";
+import {
+  Form,
+  FormField,
+  FormTextArea,
+  FormFilePicker,
+  SubmitButton,
+} from "../../forms";
 import { postSchema, acceptTypes } from "./validationRules";
 
 const initialValues = {
@@ -21,6 +27,9 @@ const PostForm = ({ onSubmit, errors }) => {
       borderRadius="4px"
       backgroundColor="#fff"
     >
+      <Heading textAlign="center" color="#3366FF">
+        Create post
+      </Heading>
       <Form
         validationSchema={postSchema}
         initialValues={initialValues}
@@ -32,7 +41,7 @@ const PostForm = ({ onSubmit, errors }) => {
           </InlineAlert>
         )}
         <FormField name="title" label="Title" error={errors.title} />
-        <FormField name="body" label="Text" error={errors.body} />
+        <FormTextArea name="body" label="Text" error={errors.body} />
         <FormFilePicker name="file" label="Choose image" accept={acceptTypes} />
         <SubmitButton title={"Create"} appearance="primary" />
       </Form>
