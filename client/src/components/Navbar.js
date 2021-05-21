@@ -5,7 +5,8 @@ import { Pane, Avatar, Heading, Button, Link, Strong } from "evergreen-ui";
 import logoText from "../assets/images/logoText.png";
 import logo from "../assets/images/logo.png";
 
-const Navbar = () => {
+const Navbar = ({ auth }) => {
+  const { isAuth, loginData } = auth;
   return (
     <Pane
       backgroundColor="#F9FAFC"
@@ -29,21 +30,27 @@ const Navbar = () => {
           alt="logo"
           src={logo}
           height="30px"
-          style={{ transform: "translateY(-10px)" }}
+          style={{ transform: "translateY(-15px)" }}
         />
       </Pane>
-      <Pane display="flex" alignItems="center">
-        <Avatar src={logoText} size={45} />
-        <Heading size={700} style={{ marginRight: "10px", marginLeft: "10px" }}>
-          Bober
-        </Heading>
-        <Button size="small" intent="danger">
-          Logout
-        </Button>
-      </Pane>
-      <Link is={RouterLink} to="/login">
-        <Strong color="#2952CC">Signin</Strong>
-      </Link>
+      {isAuth ? (
+        <Pane display="flex" alignItems="center">
+          <Avatar src={loginData.image} size={45} />
+          <Heading
+            size={700}
+            style={{ marginRight: "10px", marginLeft: "10px" }}
+          >
+            {loginData.nickname}
+          </Heading>
+          <Button size="small" intent="danger">
+            Logout
+          </Button>
+        </Pane>
+      ) : isAuth !== null ? (
+        <Link is={RouterLink} to="/login">
+          <Strong color="#2952CC">Signin</Strong>
+        </Link>
+      ) : null}
     </Pane>
   );
 };
