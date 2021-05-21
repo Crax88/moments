@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Pane, Text, Link } from "evergreen-ui";
+import { Pane, Heading } from "evergreen-ui";
 import PostItem from "./PostListItem";
 
 const PostList = ({ posts }) => {
@@ -15,12 +15,9 @@ const PostList = ({ posts }) => {
         ? posts.map((post) => <PostItem post={post} key={post._id} />)
         : null}
       {!posts.length ? (
-        <Text textAlign="center" size={500}>
-          No posts yet,{" "}
-          <Link cursor="pointer" href="#" size={500}>
-            become the first creator!
-          </Link>
-        </Text>
+        <Heading textAlign="center" size={700} color="#2952CC">
+          No posts yet, become the first creator!
+        </Heading>
       ) : null}
     </Pane>
   );
