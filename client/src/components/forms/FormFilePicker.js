@@ -49,6 +49,7 @@ const FormFilePicker = ({ name, error, accept, label, ...rest }) => {
         borderColor={isInvalid ? "#D14343" : ""}
         borderRadius="4px"
         onClick={handleClick}
+        cursor="pointer"
       >
         {!file.file ? (
           <Text>{label ? label : "Choose file"}</Text>
