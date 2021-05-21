@@ -6,6 +6,7 @@ export const loginSchema = Yup.object().shape({
     .email("Invalid email")
     .label("Email"),
   password: Yup.string().required("Password is required").label("Password"),
+  remember: Yup.boolean(),
 });
 
 export const registerSchema = Yup.object().shape({
@@ -30,4 +31,5 @@ export const registerSchema = Yup.object().shape({
     .required()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .label("Confirm password"),
+  remember: Yup.boolean(),
 });

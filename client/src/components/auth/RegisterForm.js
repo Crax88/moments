@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { InlineAlert } from "evergreen-ui";
-import { Form, FormField, SubmitButton } from "../forms";
+import { Form, FormField, FormCheckbox, SubmitButton } from "../forms";
 import { registerSchema } from "./validationRules";
 
 const initialValues = {
@@ -9,6 +9,7 @@ const initialValues = {
   email: "",
   password: "",
   confirmPassword: "",
+  remember: false,
 };
 
 const RegisterForm = ({ onSubmit, errors }) => {
@@ -37,6 +38,7 @@ const RegisterForm = ({ onSubmit, errors }) => {
         type="password"
         error={errors.confirmPassword}
       />
+      <FormCheckbox name="remember" label="Remember me" />
       <SubmitButton title={"Signup"} appearance="primary" />
     </Form>
   );

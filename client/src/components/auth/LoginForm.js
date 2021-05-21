@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { InlineAlert } from "evergreen-ui";
-import { Form, FormField, SubmitButton } from "../forms";
+import { Form, FormField, FormCheckbox, SubmitButton } from "../forms";
 import { loginSchema } from "./validationRules";
 
 const initialValues = {
   email: "",
   password: "",
+  remember: false,
 };
 
 const LoginForm = ({ onSubmit, errors }) => {
@@ -28,6 +29,7 @@ const LoginForm = ({ onSubmit, errors }) => {
         type="password"
         error={errors.password}
       />
+      <FormCheckbox name="remember" label="Remember me" />
       <SubmitButton title={"Signin"} appearance="primary" />
     </Form>
   );
