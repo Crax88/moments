@@ -15,9 +15,9 @@ const PostList = ({ posts }) => {
         ? posts.map((post) => <PostItem post={post} key={post._id} />)
         : null}
       {!posts.length ? (
-        <Text textAlign="center" size="50">
+        <Text textAlign="center" size={500}>
           No posts yet,{" "}
-          <Link cursor="pointer" href="#" size="50">
+          <Link cursor="pointer" href="#" size={500}>
             become the first creator!
           </Link>
         </Text>
