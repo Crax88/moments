@@ -10,7 +10,7 @@ const FormFilePicker = ({ name, error, accept, label, ...rest }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file && (!accept ? true : accept.includes(file.type))) {
+    if (file) {
       setFile({
         file: file,
         previewUrl: /image/.test(file.type) ? URL.createObjectURL(file) : "",
