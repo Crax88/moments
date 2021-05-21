@@ -39,6 +39,7 @@ const PostListItem = ({ post }) => {
       >
         <Text color="muted">By {author.name}</Text>
         <Text color="muted">6 hours ago</Text>
+        {/* do something with created date */}
         <Text>
           <ThumbsUpIcon color="muted" />
           <Strong marginLeft="2px" color="muted">
