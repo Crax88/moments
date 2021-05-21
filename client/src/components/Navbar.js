@@ -10,12 +10,12 @@ const Navbar = () => {
       backgroundColor="#F9FAFC"
       borderRadius={15}
       marginX="30px"
-      marginY="0"
       display="flex"
       justifyContent="space-between"
       alignItems="center"
       paddingX="50px"
       paddingY="10px"
+      elevation={1}
     >
       <Pane isplay="flex" alignItems="center">
         <img
