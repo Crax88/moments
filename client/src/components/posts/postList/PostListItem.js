@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Card,
   Pane,
@@ -49,6 +50,21 @@ const PostListItem = ({ post }) => {
       </Pane>
     </Card>
   );
+};
+
+PostListItem.propTypes = {
+  post: PropTypes.shape({
+    _id: PropTypes.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+    }).isRequired,
+    image: PropTypes.string.isRequired,
+    likes: PropTypes.array.isRequired,
+    tags: PropTypes.array.isRequired,
+    createdAt: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default PostListItem;
